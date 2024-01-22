@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: whisper-service
+spec:
+  selector:
+    app: whisper
+    tier: synopsia
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whisper
+      tier: synopsia
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: whisper
+        tier: synopsia
+        track: stable
+    spec:
+      containers:
+      - name: whisper
+        image: whisper-local
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

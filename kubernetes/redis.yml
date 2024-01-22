@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis
+    tier: synopsia
+  ports:
+  - port: 6379
+    targetPort: 6379
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      tier: synopsia
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: redis
+        tier: synopsia
+        track: stable
+    spec:
+      containers:
+      - name: redis
+        image: redis/redis-stack-server:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
