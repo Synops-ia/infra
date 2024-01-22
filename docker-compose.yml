@@ -9,14 +9,14 @@ services:
       - mynetwork
 
   whisperapi:
-    image: whisper-local # Assuming you have a Dockerfile for your whisperapi
+    image: synopsia/whisperapi:1.0.2 # Assuming you have a Dockerfile for your whisperapi
     ports:
       - "8000:8000"
     networks:
       - mynetwork
 
   webapp:
-    image: webapp-local # Assuming you have a Dockerfile for your whisperapi
+    image: synopsia/webapp:0.0.2 # Assuming you have a Dockerfile for your whisperapi
     ports:
       - "8080:8080"
     networks:
