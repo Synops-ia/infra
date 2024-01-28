@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   whisperapi:
-    image: synopsia/whisperapi:1.0.4
+    image: synopsia/whisperapi:1.1.4
     ports:
       - "8000:8000"
     networks:
