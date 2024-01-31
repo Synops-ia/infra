@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   whisperapi:
-    image: synopsia/whisperapi:1.1.4
+    image: synopsia/whisperapi:1.2.6
     ports:
       - "8000:8000"
     networks:
@@ -10,12 +10,13 @@ services:
       - ./.env
     depends_on:
       - redis
+      - mongodb
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
 
-  whisperapp:
-    image: synopsia/webapp:0.0.3
+  webapp:
+    image: synopsia/webapp:0.1.0
     ports:
       - "8080:8080"
     networks:
@@ -28,9 +29,19 @@ services:
 
   redis:
     image: redis/redis-stack-server
+    volumes:
+      - ./redis-conf:/usr/local/etc/redis/redis.conf
+    command: redis-stack-server /usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379" 
     networks:
+      - whisper-network
+
+  mongodb:
+      image: mongo
+      ports:
+      - "27017:27017"
+      networks:
       - whisper-network
 
 networks:
