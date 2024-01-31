@@ -10,6 +10,7 @@ services:
       - ./.env
     depends_on:
       - redis
+      - mongodb
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -34,6 +35,13 @@ services:
     ports:
       - "6379:6379" 
     networks:
+      - whisper-network
+
+  mongodb:
+      image: mongo
+      ports:
+      - "27017:27017"
+      networks:
       - whisper-network
 
 networks:
