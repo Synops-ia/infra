@@ -28,6 +28,9 @@ services:
 
   redis:
     image: redis/redis-stack-server
+    volumes:
+      - ./redis-conf:/usr/local/etc/redis/redis.conf
+    command: redis-stack-server /usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379" 
     networks:
