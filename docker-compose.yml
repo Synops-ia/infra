@@ -7,13 +7,24 @@ services:
     networks:
       - whisper-network
     env_file:
-      - ./.env
+      - whisperapi/.env
     depends_on:
       - redis
       - mongodb
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+
+  userservice:
+    image: synopsia/userservice:1.0.1
+    ports:
+      - "8085:8085"
+    networks:
+      - whisper-network
+    env_file:
+      - user-service/.env
+    depends_on:
+      - mongodb
 
   webapp:
     image: synopsia/webapp:1.0.0
